@@ -1,0 +1,140 @@
+{% block content %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estoque</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="static/css/style.css">
+</head>
+<body class="gradient">
+<div  class="topnav">
+   <h1 class="text-center mb-4"> ModaFree </h1>
+
+</div>
+
+  <div class="container mt-3">
+    <h2 class="text-center mb-4"> Estoque</h2>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Produtos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Adicionar Produto</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="update-tab" data-toggle="tab" href="#update" role="tab" aria-controls="update" aria-selected="false">Atualizar Produto</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" id="delete-tab" data-toggle="tab" href="#delete" role="tab" aria-controls="delete" aria-selected="false">Excluir Produto</a>
+      </li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content mt-3">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <h2>Lista de Itens</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Quantidade</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Preço Unidade</th>
+            </tr>
+          </thead>
+
+          <tbody id="product-list">
+            <!-- Products will be added dynamically here -->
+          {% for item in items %}
+          <tr>
+          <td>{{item.id}}</td>
+          <td>{{item.nome}}</td>
+          <td>{{item.quantidade}}</td>
+            <td>{{item.marca}}</td>
+          <td>{{item.precounid}}</td>
+          </tr>
+          {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <h3>Adicionar Item</h3>
+        <form action="{% url 'home' %}" method="post" id="add-product-form" >
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="productName">Nome do Item:</label>
+            <input type="text" name="nome" class="form-control" id="productName" placeholder="Digite o nome do item" required="">
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantidade:</label>
+            <input type="text" name="quantidade" class="form-control" id="quantity" placeholder="Digite a quantidade" required="">
+          </div>
+
+          <div class="form-group">
+            <label for="productName">Marca:</label>
+            <input type="text" name="marca" class="form-control" id="productMarca" placeholder="Digite a marca do item" required="">
+          </div>
+
+           <div class="form-group">
+            <label for="productName">Preço por Unidade:</label>
+            <input type="text" name="precounid" class="form-control" id="productPrice" placeholder="Digite o preço do item" required="">
+            </div>
+          <button type="submit" class="btn btn-primary">Adicionar</button>
+        </form>
+      </div>
+      <!-- Update produtos -->
+      <div class="tab-pane fade" id="update" role="tabpanel" aria-labelledby="update-tab">
+        <h3>Atualizar Item</h3>
+        <form action="{% url 'home' %}"  method="post" id="up-product-form">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="productName">ID do Item:</label>
+            <input type="text" name="upid" class="form-control" id="upid" placeholder="Digite Id do item">
+          </div>
+          <div class="form-group">
+            <label for="productName">Nome novo:</label>
+            <input type="text" name="nome" class="form-control" id="UpproductName" placeholder="Digite o nome do item">
+          </div>
+          <div class="form-group">
+            <label for="quantity">Nova Quantidade:</label>
+            <input type="number" name="quantidade" class="form-control" id="Upquantity" placeholder="Digite a quantidade">
+          </div>
+          <div class="form-group">
+            <label for="quantity">Novo Preço Unidade:</label>
+            <input type="number" name="precounid" class="form-control" id="Uppreco" placeholder="Digite o preço do item">
+          </div>
+          <button type="submit" class="btn btn-primary">Atualizar</button>
+        </form>
+      </div>
+      <!-- Excluir produto -->
+        <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="delete-tab">
+        <h3>Excluir Item</h3>
+        <form id="del-product-form" action="{% url 'home' %}" method="post" >
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="productName">ID do Item:</label>
+            <input type="number" name="delid" class="form-control" id="DelproductId" placeholder="Digite o ID do produto">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Excluir</button>
+        </form>
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
+
+{% endblock %}
